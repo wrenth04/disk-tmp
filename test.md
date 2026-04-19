@@ -1,3 +1,3 @@
 
 
-[test](treee)
+[test](autosrt-player://ipx-355)
