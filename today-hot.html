@@ -115,7 +115,7 @@
                 card.className = 'video-card bg-slate-800 rounded-xl overflow-hidden shadow-lg flex flex-col border border-slate-700';
 
                 const cover = getCoverUrl(item.code, item.cover_url);
-                const protocolUrl = item.url || `autosrt-player://${item.code}`;
+                const protocolUrl = `autosrt-player://${item.code}`;
 
                 card.innerHTML = `
                     <div class="relative group cursor-pointer overflow-hidden aspect-[2/3] bg-slate-700">
