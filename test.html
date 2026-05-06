@@ -1,8 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>篠田步美 (Ayumi Shinoda) 作品收藏庫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+        .video-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.3);
+        }
+        .image-placeholder {
+            background: linear-gradient(45deg, #1e293b, #334155);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ec4899;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="custom-scrollbar">
 
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 p-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center text-2xl font-bold">步</div>
+                <div>
+                    <h1 class="text-xl font-bold text-white leading-tight">篠田步美作品集</h1>
+                    <p class="text-xs text-pink-400 font-medium tracking-widest uppercase">Ayumi Shinoda Collection</p>
+                </div>
+            </div>
+            
+            <div class="relative w-full md:w-96">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                </span>
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="搜尋番號或作品名稱..." 
+                    class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                >
+            </div>
+        </div>
+    </header>
 
-<a href="autosrt-player://ipx-149"> click</a>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+        <div id="stats" class="mb-6 text-slate-400 text-sm italic">
+            正在載入資料庫...
+        </div>
 
+        <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards will be injected here -->
+        </div>
 
+        <div id="noResults" class="hidden flex flex-col items-center justify-center py-20 text-slate-500">
+            <i class="fa-solid fa-box-open text-6xl mb-4"></i>
+            <p class="text-xl">找不到相關作品</p>
+        </div>
+    </main>
 
-test2 
-<a href="autosrt-player://https://github.com/wrenth04/autosrt/releases/download/srt/miad-791.m3u8">  clicl2 </a>
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 mt-12 py-8 bg-slate-950">
+        <div class="text-center text-slate-500 text-sm">
+            <p>作品資料僅供整理參考</p>
+            <p class="mt-2">點擊卡片將嘗試調用 autosrt-player:// 協議啟動播放器</p>
+        </div>
+    </footer>
+
+    <script>
+        // 作品資料庫 - 可以在這裡擴充更多番號
+        const videoData = [
+            { id: "MEYD-808", title: "美乳美尻熟女 篠田步美", release: "2023-01-20" },
+            { id: "MIDE-894", title: "高級風俗店 篠田步美", release: "2021-05-13" },
+            { id: "IPX-667", title: "美人妻の誘惑", release: "2021-04-13" },
+            { id: "SSNI-842", title: "清楚系OLの秘密", release: "2020-08-07" },
+            { id: "MIDE-780", title: "篠田あゆみ 極上性交", release: "2020-05-01" },
+            { id: "MIDE-692", title: "熟女の極上マッサージ", release: "2019-11-01" },
+            { id: "STARS-110", title: "美魔女傳說", release: "2019-08-01" },
+            { id: "MIDE-604", title: "若奥様と密会", release: "2018-12-01" },
+            { id: "SNIS-986", title: "篠田あゆみ 淫亂解禁", release: "2017-09-07" },
+            { id: "SNIS-938", title: "美人秘書 篠田あゆみ", release: "2017-07-01" },
+            { id: "SNIS-853", title: "極上の女 篠田あゆみ", release: "2017-03-01" },
+            { id: "SNIS-808", title: "篠田あゆみ 結婚三週年", release: "2017-01-01" },
+            { id: "SNIS-734", title: "義母 篠田あゆみ", release: "2016-10-01" },
+            { id: "SNIS-688", title: "不倫妻の情事", release: "2016-08-01" },
+            { id: "SNIS-636", title: "篠田あゆみ 密室誘惑", release: "2016-06-01" },
+            { id: "SNIS-583", title: "清楚お姉さん 篠田あゆみ", release: "2016-03-01" },
+            { id: "PRED-489", title: "篠田あゆみ 絶頂", release: "2024-03-12" },
+            { id: "HND-315", title: "美人OL 篠田あゆみ", release: "2016-05-19" },
+            { id: "HND-265", title: "篠田あゆみ 初登場", release: "2015-12-10" }
+        ];
+
+        const videoGrid = document.getElementById('videoGrid');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const stats = document.getElementById('stats');
+
+        // 生成封面 URL 的函式 (通常 DMM 或其他片商有規律)
+        function getCoverUrl(code) {
+            // 處理常見格式，如果失效會顯示 placeholder
+            const cleanCode = code.toLowerCase().replace('-', '');
+            // 這是一個模擬的封面來源模式，實際可能因來源不同而變
+            return `https://pics.dmm.co.jp/mono/movie/adult/${cleanCode}/${cleanCode}pl.jpg`;
+        }
+
+        function renderVideos(list) {
+            videoGrid.innerHTML = '';
+            stats.innerText = `顯示中：${list.length} 部作品`;
+            
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'video-card bg-slate-800 rounded-xl overflow-hidden shadow-lg flex flex-col border border-slate-700';
+                
+                const cover = getCoverUrl(item.id);
+                const protocolUrl = `autosrt-player://${item.id}`;
+
+                card.innerHTML = `
+                    <div class="relative group cursor-pointer overflow-hidden aspect-[2/3] bg-slate-700">
+                        <img 
+                            src="${cover}" 
+                            alt="${item.id}" 
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            onerror="this.src='https://via.placeholder.com/400x600/1e293b/ec4899?text=${item.id}'"
+                        >
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <a href="${protocolUrl}" class="bg-pink-600 text-white px-6 py-2 rounded-full font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                <i class="fa-solid fa-play mr-2"></i> 播放作品
+                            </a>
+                        </div>
+                        <div class="absolute top-2 right-2">
+                            <span class="bg-black/70 backdrop-blur-sm text-pink-400 text-[10px] font-bold px-2 py-1 rounded border border-pink-500/30">
+                                ${item.id.split('-')[0]}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-pink-500 font-mono font-bold text-lg">${item.id}</h3>
+                            <span class="text-slate-500 text-[10px]">${item.release || ''}</span>
+                        </div>
+                        <p class="text-sm text-slate-300 line-clamp-2 mb-4 flex-grow font-medium">${item.title}</p>
+                        <a href="${protocolUrl}" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 text-center py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-link text-xs"></i> 開啟播放器
+                        </a>
+                    </div>
+                `;
+                videoGrid.appendChild(card);
+            });
+        }
+
+        // 搜尋功能
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = videoData.filter(v => 
+                v.id.toLowerCase().includes(term) || 
+                v.title.toLowerCase().includes(term)
+            );
+            renderVideos(filtered);
+        });
+
+        // 初始渲染
+        window.onload = () => {
+            renderVideos(videoData);
+        };
+    </script>
+</body>
+</html>
