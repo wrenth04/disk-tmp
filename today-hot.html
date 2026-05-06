@@ -95,8 +95,10 @@
 
         function getCoverUrl(code, coverUrl) {
             if (coverUrl) return coverUrl;
-            const cleanCode = code.toLowerCase().replace('-', '');
-            return `https://pics.dmm.co.jp/mono/movie/adult/${cleanCode}/${cleanCode}pl.jpg`;
+            const cleanCode = code.toLowerCase();
+            return `https://fourhoi.com/${cleanCode}/cover-n.jpg`;
+            //const cleanCode = code.toLowerCase().replace('-', '');
+            //return `https://pics.dmm.co.jp/mono/movie/adult/${cleanCode}/${cleanCode}pl.jpg`;
         }
 
         function renderVideos(list) {
